@@ -1,0 +1,26 @@
+version: '3'
+services:
+  front:
+    build:
+      context: ./Front
+      dockerfile: Dockerfile
+    ports:
+     - "80:80"
+  db:
+    image: mysql:5.7.22
+    environment:
+     - MYSQL_ROOT_PASSWORD=qwerty
+    volumes:
+     - "aplikacja:/var/lib/mysql"
+  back:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    ports:
+     - "8181:8181"
+    expose:
+      - 8181
+    depends_on:
+     - db
+volumes:
+  aplikacja:
